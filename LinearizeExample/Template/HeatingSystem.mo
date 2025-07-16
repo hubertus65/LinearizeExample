@@ -87,27 +87,11 @@ partial model HeatingSystem "Simple model of a heating system"
     state_a(p(start=110000)),
     state_b(p(start=110000)))
     annotation (Placement(transformation(extent={{20,-80},{0,-60}})));
-
-public
   .Modelica.Fluid.Sensors.Temperature sensor_T_forward(redeclare package Medium =
         Medium) annotation (Placement(transformation(extent={{50,30},{70,50}})));
   .Modelica.Fluid.Sensors.Temperature sensor_T_return(redeclare package Medium =
         Medium)
     annotation (Placement(transformation(extent={{-20,-60},{-40,-40}})));
-  .Modelica.Fluid.Pipes.DynamicPipe pipe(
-    redeclare package Medium = Medium,
-    use_T_start=true,
-    T_start=.Modelica.Units.Conversions.from_degC(80),
-    redeclare model HeatTransfer =
-        .Modelica.Fluid.Pipes.BaseClasses.HeatTransfer.IdealFlowHeatTransfer,
-    diameter=0.01,
-    redeclare model FlowModel =
-        .Modelica.Fluid.Pipes.BaseClasses.FlowModels.DetailedPipeFlow,
-    length=10,
-    p_a_start=130000) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={80,-20})));
 
 equation
 
@@ -125,18 +109,14 @@ equation
           {10,-65.6},{9.9,-65.6}}, color={191,0,0}));
   connect(sensor_T_forward.port, heater.port_b)
     annotation (Line(points={{60,30},{60,20},{50,20}}, color={0,127,255}));
-  connect(heater.port_b, pipe.port_a)
-    annotation (Line(points={{50,20},{80,20},{80,-10}}, color={0,127,255}));
-  connect(pipe.port_b, valve.port_a)
-    annotation (Line(points={{80,-30},{80,-70},{60,-70}}, color={0,127,255}));
   connect(radiator.port_b, tank.ports[1])
     annotation (Line(points={{0,-70},{-72,-70},{-72,24}}, color={0,127,255}));
   connect(pump.port_b, heater.port_a)
     annotation (Line(points={{-30,20},{0,20},{30,20}}, color={0,127,255}));
+    connect(valve.port_a,heater.port_b) annotation(Line(points = {{60,-70},{76,-70},{76,20},{50,20}},color = {0,127,255}));
   annotation (
     Documentation(info="<html>
-<p>
-Simple heating system with a closed flow cycle.
+<p>This is a copy of Modelica.Fluid.Example.HeatingSystem, but with a long, adiabatic pipe removed to reduce number of states in the model by 4.&nbsp;</p><p>Simple heating system with a closed flow cycle.
 After 2000s of simulation time the valve fully opens. A simple idealized control is embedded
 into the respective components, so that the heating system can be regulated with the valve:
 the pump controls the pressure, the burner controls the temperature.
@@ -168,9 +148,8 @@ is treated as high-index DAE, as opposed to a nonlinear equation system for conn
 could be additionally introduced to model the fitting between the heater and the pipe, e.g., to adapt different diameters.
 </p>
 
-<img src=\"modelica://Modelica/Resources/Images/Fluid/Examples/HeatingSystem.png\" border=\"1\"
-     alt=\"HeatingSystem.png\">
-</html>"),
+<p><img src=\"modelica://Modelica/Resources/Images/Fluid/Examples/HeatingSystem.png\" border=\"1\" alt=\"HeatingSystem.png\">
+</p></html>"),
     experiment(StopTime=6000),
     __Dymola_Commands(file(ensureSimulated=true)=
         "modelica://Modelica/Resources/Scripts/Dymola/Fluid/HeatingSystem/plotResults.mos"
