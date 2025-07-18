@@ -1,4 +1,4 @@
-within LinearizeExample;
+within LinearizeExample.VectorizedConnectors;
 model HeatingSystemNonLinear "Nonlinear heating system model"
   extends .LinearizeExample.Template.HeatingSystem(
     redeclare replaceable package Medium = .Modelica.Media.Water.WaterIF97_R1pT);

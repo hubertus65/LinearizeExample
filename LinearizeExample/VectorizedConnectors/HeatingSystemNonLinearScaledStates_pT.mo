@@ -1,7 +1,7 @@
-within LinearizeExample;
+within LinearizeExample.VectorizedConnectors;
 
 model HeatingSystemNonLinearScaledStates_pT "Nonlinear heating system model"
-  extends .LinearizeExample.HeatingSystemNonLinear(redeclare replaceable package Medium = .Modelica.Media.CompressibleLiquids.LinearWater_pT_Ambient,tank(energyDynamics = Modelica.Fluid.Types.Dynamics.SteadyState,level(stateSelect=StateSelect.always)));
+  extends .LinearizeExample.VectorizedConnectors.HeatingSystemNonLinear(redeclare replaceable package Medium = .Modelica.Media.CompressibleLiquids.LinearWater_pT_Ambient,tank(energyDynamics = .Modelica.Fluid.Types.Dynamics.SteadyState,level(stateSelect=StateSelect.always)));
 
   Real radiator_p(stateSelect=StateSelect.always, nominal=1.0) "Scaled radiator pressure states";  
   Real heater_p(stateSelect=StateSelect.always,nominal=1.0) "Scaled heater pressure states";  
