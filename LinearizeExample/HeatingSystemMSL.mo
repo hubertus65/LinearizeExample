@@ -1,7 +1,6 @@
 within LinearizeExample;
 
-model HeatingSystemMSL "Simple model of a heating system"
-  extends .Modelica.Icons.Example;
+partial model HeatingSystemMSL "Simple model of a heating system"
    replaceable package Medium =
       .Modelica.Media.CompressibleLiquids.LinearWater_pT_Ambient
      constrainedby .Modelica.Media.Interfaces.PartialMedium;
@@ -45,12 +44,7 @@ model HeatingSystemMSL "Simple model of a heating system"
     dp_start=18000,
     dp_nominal=10000)
     annotation (Placement(transformation(extent={{60,-80},{40,-60}})));
-protected
-  .Modelica.Blocks.Interfaces.RealOutput m_flow(unit="kg/s")
-    annotation (Placement(transformation(extent={{-6,34},{6,46}})));
 public
-  .Modelica.Fluid.Sensors.MassFlowRate sensor_m_flow(redeclare package Medium = Medium)
-    annotation (Placement(transformation(extent={{-20,10},{0,30}})));
   .Modelica.Thermal.HeatTransfer.Sources.FixedTemperature T_ambient(T=system.T_ambient)
     annotation (Placement(transformation(extent={{-14,-27},{0,-13}})));
   .Modelica.Thermal.HeatTransfer.Components.ThermalConductor wall(G=1.6e3/20)
@@ -58,14 +52,13 @@ public
         origin={10,-48},
         extent={{8,-10},{-8,10}},
         rotation=90)));
-  replaceable .Modelica.Thermal.HeatTransfer.Sources.FixedHeatFlow burner(
+ .Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow burner(
     T_ref=343.15,
     alpha=-0.5)
-    annotation (Placement(transformation(extent={{16,30},{36,50}})));
+    annotation (Placement(transformation(extent={{14.0,52.0},{34.0,72.0}},rotation = 0.0,origin = {0.0,0.0})));
   inner .Modelica.Fluid.System system(
-      m_flow_small=1e-4, energyDynamics=.Modelica.Fluid.Types.Dynamics.SteadyStateInitial)
-                        annotation (Placement(transformation(extent={{-90,70},{
-            -70,90}})));
+      m_flow_small=1e-4, energyDynamics=.Modelica.Fluid.Types.Dynamics.SteadyStateInitial,massDynamics = Modelica.Fluid.Types.Dynamics.SteadyStateInitial)
+                        annotation (Placement(transformation(extent={{-40.0,80.0},{-20.0,100.0}},rotation = 0.0,origin = {0.0,0.0})));
   .Modelica.Fluid.Pipes.DynamicPipe heater(
     redeclare package Medium = Medium,
     use_T_start=true,
@@ -100,11 +93,6 @@ public
     state_b(p(start=110000)))
     annotation (Placement(transformation(extent={{20,-80},{0,-60}})));
 
-protected
-  .Modelica.Blocks.Interfaces.RealOutput T_forward(unit="K")
-    annotation (Placement(transformation(extent={{74,34},{86,46}})));
-  .Modelica.Blocks.Interfaces.RealOutput T_return(unit="K")
-    annotation (Placement(transformation(extent={{-46,-56},{-58,-44}})));
 public
   .Modelica.Fluid.Sensors.Temperature sensor_T_forward(redeclare package Medium
       = Medium)
@@ -112,15 +100,8 @@ public
   .Modelica.Fluid.Sensors.Temperature sensor_T_return(redeclare package Medium
       = Medium)
     annotation (Placement(transformation(extent={{-20,-60},{-40,-40}})));
-protected
-  .Modelica.Blocks.Interfaces.RealOutput tankLevel(unit="m")
-                                 annotation (Placement(transformation(extent={{-56,34},
-            {-44,46}})));
+
 public
-  .Modelica.Blocks.Sources.Step handle(
-    startTime=2000,
-    height=0.9,
-    offset=0.1) annotation (Placement(transformation(extent={{26,-27},{40,-13}})));
   .Modelica.Fluid.Pipes.DynamicPipe pipe(
     redeclare package Medium = Medium,
     nNodes=2,
@@ -138,16 +119,9 @@ public
         origin={80,-20})));
 
 equation
-tankLevel = tank.level;
-  connect(sensor_m_flow.m_flow, m_flow) annotation (Line(points={{-10,31},
-          {-10,40},{0,40}}, color={0,0,127}));
-  connect(sensor_m_flow.port_b, heater.port_a)
-                                            annotation (Line(points={{0,20},{0,
-          20},{30,20}}, color={0,127,255}));
   connect(T_ambient.port, wall.port_a) annotation (Line(
         points={{0,-20},{10,-20},{10,-40}}, color={191,0,0}));
-  connect(sensor_T_forward.T, T_forward) annotation (Line(points={{67,40},{
-          80,40}}, color={0,0,127}));
+
   connect(radiator.port_a, valve.port_b) annotation (Line(points={{20,-70},{20,
           -70},{40,-70}}, color={0,127,255}));
   connect(sensor_T_return.port, radiator.port_b)
@@ -155,16 +129,10 @@ tankLevel = tank.level;
           {-30,-70},{0,-70}}, color={0,127,255}));
   connect(tank.ports[2], pump.port_a) annotation (Line(
       points={{-68,30},{-68,20},{-50,20}}, color={0,127,255}));
-  connect(handle.y, valve.opening) annotation (Line(
-      points={{40.7,-20},{50,-20},{50,-62}}, color={0,0,127}));
-  connect(pump.port_b, sensor_m_flow.port_a)
-                                            annotation (Line(
-      points={{-30,20},{-20,20}}, color={0,127,255}));
-  connect(sensor_T_return.T, T_return) annotation (Line(
-      points={{-37,-50},{-52,-50}}, color={0,0,127}));
+
   connect(burner.port, heater.heatPorts[1])
                                           annotation (Line(
-      points={{36,40},{40.1,40},{40.1,24.4}}, color={191,0,0}));
+      points={{34,62},{40.1,62},{40.1,24.4}}, color={191,0,0}));
   connect(wall.port_b, radiator.heatPorts[1]) annotation (Line(
       points={{10,-56},{10,-65.6},{9.9,-65.6}}, color={191,0,0}));
   connect(sensor_T_forward.port, heater.port_b)
@@ -176,8 +144,9 @@ tankLevel = tank.level;
       points={{80,-30},{80,-70},{60,-70}}, color={0,127,255}));
   connect(radiator.port_b, tank.ports[1]) annotation (Line(
       points={{0,-70},{-72,-70},{-72,30}}, color={0,127,255}));
+    connect(pump.port_b,heater.port_a) annotation(Line(points = {{-30,20},{30,20}},color = {0,127,255}));
   annotation (Documentation(info="<html>
-<p>This is a copy of the original model from MSL:&nbsp;Modelica.Fluid.Examples.HeatingSystem, in order to show how to adapt models fro control design. Note that this model is not ideal from a control design point of view: all pressure states, the tank level and the tank temperature (almost thermally isolated from the rest) are irrelevant for the control problem. \"Good\" states for control design would be the two temperatures in the sensors, and the mass flow. The original model as-is works well for simulation.&nbsp;</p><p><strong>Original documentation:</strong>&nbsp;</p><p>Simple heating system with a closed flow cycle.
+<p>This is a copy of the original model from MSL:&nbsp;Modelica.Fluid.Examples.HeatingSystem, in order to show how to adapt models fro control design. Note that this model is not ideal from a control design point of view: all pressure states, the tank level and the tank temperature (almost thermally isolated from the rest) are irrelevant for the control problem. \"Good\" states for control design would be the two temperatures in the sensors, and the mass flow. The original model as-is works well for simulation.&nbsp;</p><p>Also: the model is declared partial, and cannot be simulated.&nbsp;</p><p><strong>Original documentation:</strong>&nbsp;</p><p>Simple heating system with a closed flow cycle.
 After 2000s of simulation time the valve fully opens. A simple idealized control is embedded
 into the respective components, so that the heating system can be regulated with the valve:
 the pump controls the pressure, the burner controls the temperature.

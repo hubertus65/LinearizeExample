@@ -39,6 +39,12 @@
       "contentType": "GENERIC",
       "defaultDisabled": false,
       "id": "1eae0c37352342888d71599311263350"
+    },
+    {
+      "relpath": "Resources/Views",
+      "contentType": "VIEWS",
+      "defaultDisabled": false,
+      "id": "2422631052f64066814c7ee3e7fd74c0"
     }
   ],
   "executionOptions": [],

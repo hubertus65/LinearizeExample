@@ -1,0 +1,64 @@
+{
+  "version" : "2",
+  "id" : "cba1f62a-a6e0-4c45-a881-822b45c59007",
+  "experiment" : {
+    "base" : {
+      "analysis" : {
+        "variableFilters" : [ ],
+        "selectedType" : "LinearizeExample.linearize",
+        "choices" : [ {
+          "type" : "dynamic",
+          "parameters" : {
+            "startTime" : 0,
+            "stopTime" : 6000
+          },
+          "simulationOptions" : {
+            "dynamic_diagnostics" : false,
+            "ncp" : 500
+          },
+          "solverOptions" : {
+            "store_event_points" : true
+          },
+          "compilerOptions" : {
+            "generate_html_diagnostics" : false,
+            "include_protected_variables" : false
+          },
+          "runtimeOptions" : { }
+        }, {
+          "type" : "LinearizeExample.linearize",
+          "parameters" : {
+            "print_to_log" : true,
+            "t_linearize" : 500
+          },
+          "simulationOptions" : { },
+          "solverOptions" : { },
+          "compilerOptions" : {
+            "generate_html_diagnostics" : true,
+            "include_protected_variables" : false
+          },
+          "runtimeOptions" : { }
+        } ],
+        "expansion" : {
+          "discreteAlgorithm" : {
+            "noOfSamples" : 0,
+            "seed" : 0
+          },
+          "continuousAlgorithm" : {
+            "type" : "SOBOL",
+            "noOfSamples" : 10,
+            "seed" : 0
+          }
+        }
+      },
+      "modifiers" : {
+        "initializeFrom" : "",
+        "variables" : [ ]
+      }
+    }
+  },
+  "metadata" : {
+    "created" : "2025-07-22 20:44:07.538720593",
+    "lastModified" : "2025-07-23T15:38:32.053071916Z",
+    "name" : "Linearize"
+  }
+}

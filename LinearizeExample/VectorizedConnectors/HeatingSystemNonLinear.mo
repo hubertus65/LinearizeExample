@@ -1,6 +1,6 @@
 within LinearizeExample.VectorizedConnectors;
 model HeatingSystemNonLinear "Nonlinear heating system model"
-  extends .LinearizeExample.Template.HeatingSystem(
+  extends .LinearizeExample.HeatingSystemMSL(
     redeclare replaceable package Medium = .Modelica.Media.Water.WaterIF97_R1pT);
 
   parameter Integer nu=2 "Number of inputs";
