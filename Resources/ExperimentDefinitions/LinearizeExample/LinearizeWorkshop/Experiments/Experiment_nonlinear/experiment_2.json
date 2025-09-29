@@ -1,6 +1,6 @@
 {
   "version" : "2",
-  "id" : "e3f83446-8006-4f34-8bcc-ce185c18415f",
+  "id" : "7e211841-1609-4c91-8acb-9567bdcc2259",
   "experiment" : {
     "base" : {
       "analysis" : {
@@ -20,7 +20,7 @@
             "store_event_points" : true
           },
           "compilerOptions" : {
-            "generate_html_diagnostics" : false,
+            "generate_html_diagnostics" : true,
             "include_protected_variables" : false
           },
           "runtimeOptions" : { }
@@ -44,8 +44,8 @@
     }
   },
   "metadata" : {
-    "created" : "2025-07-22 19:53:07.795093569",
-    "lastModified" : "2025-08-01T15:17:28.786136848Z",
-    "name" : "Experiment 1"
+    "created" : "2025-08-01 15:17:34.394436382",
+    "lastModified" : "2025-08-01T15:17:47.119897858Z",
+    "name" : "Experiment 2"
   }
 }
