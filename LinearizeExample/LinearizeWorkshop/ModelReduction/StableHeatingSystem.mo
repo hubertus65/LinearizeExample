@@ -26,7 +26,7 @@ model StableHeatingSystem "Simple model of a heating system using Loop Closer co
     dp_start=18000,
     dp_nominal=10000)
     annotation (Placement(transformation(extent={{60,-80},{40,-60}})));
-    .LinearizeExample.LinearizeLoopCloser referencePressure(redeclare replaceable package Medium = Medium,reference_p = 3.0e5) annotation(Placement(transformation(extent = {{-11.53,-11.53},{11.53,11.53}},origin = {-54.0,-18.0},rotation = 90.0)));
+    .LinearizeExample.LInearizeWorkshop.ModelReduction.LinearizeLoopCloser referencePressure(redeclare replaceable package Medium = Medium,reference_p = 3.0e5) annotation(Placement(transformation(extent = {{-11.53,-11.53},{11.53,11.53}},origin = {-54.0,-18.0},rotation = 90.0)));
     .Modelica.Blocks.Interfaces.RealInput Q_in annotation(Placement(transformation(extent = {{-120.0,50.0},{-80.0,90.0}},origin = {0.0,0.0},rotation = 0.0)));
     .Modelica.Blocks.Interfaces.RealInput valve_in annotation(Placement(transformation(extent = {{-120.0,-90.0},{-80.0,-50.0}},origin = {0.0,0.0},rotation = 0.0)));
 public
@@ -78,7 +78,6 @@ public
     state_b(p(start=110000)))
     annotation (Placement(transformation(extent={{20,-80},{0,-60}})));
 
-public
   .Modelica.Fluid.Sensors.Temperature sensor_T_forward(redeclare package Medium
       = Medium)
     annotation (Placement(transformation(extent={{50,30},{70,50}})));
@@ -86,7 +85,6 @@ public
       = Medium)
     annotation (Placement(transformation(extent={{-20,-60},{-40,-40}})));
 
-public
   .Modelica.Fluid.Pipes.DynamicPipe pipe(
     redeclare package Medium = Medium,
     nNodes=2,
