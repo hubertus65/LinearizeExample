@@ -4,5 +4,6 @@ HeatingSystem_scaledinterface
 HeatingSystem_nonlinear
 HeatingSystem_linear
 HeatingSystem_scalednonlinear
+StableHeatingSystem_stablescaled
 ModelReduction
 Experiments

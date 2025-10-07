@@ -4,6 +4,14 @@
   "format": "1.0.0",
   "dependencies": [
     {
+      "name": "LiquidCooling",
+      "versionSpecifier": "2.15.0+build.24"
+    },
+    {
+      "name": "Modelon",
+      "versionSpecifier": "5.0.0+build.23"
+    },
+    {
       "name": "Modelica",
       "versionSpecifier": "4.0.0"
     }

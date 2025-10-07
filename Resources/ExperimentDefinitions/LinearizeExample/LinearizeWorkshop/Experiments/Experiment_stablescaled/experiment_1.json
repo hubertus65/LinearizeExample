@@ -1,0 +1,64 @@
+{
+  "version" : "2",
+  "id" : "e3f83446-8006-4f34-8bcc-ce185c18415f",
+  "experiment" : {
+    "base" : {
+      "analysis" : {
+        "variableFilters" : [ ],
+        "selectedType" : "LinearizeExample.linearize",
+        "choices" : [ {
+          "type" : "dynamic",
+          "parameters" : {
+            "startTime" : 0,
+            "stopTime" : 10000
+          },
+          "simulationOptions" : {
+            "dynamic_diagnostics" : false,
+            "ncp" : 500
+          },
+          "solverOptions" : {
+            "store_event_points" : true
+          },
+          "compilerOptions" : {
+            "generate_html_diagnostics" : false,
+            "include_protected_variables" : false
+          },
+          "runtimeOptions" : { }
+        }, {
+          "type" : "LinearizeExample.linearize",
+          "parameters" : {
+            "print_to_log" : true,
+            "t_linearize" : 200
+          },
+          "simulationOptions" : { },
+          "solverOptions" : { },
+          "compilerOptions" : {
+            "generate_html_diagnostics" : false,
+            "include_protected_variables" : false
+          },
+          "runtimeOptions" : { }
+        } ],
+        "expansion" : {
+          "discreteAlgorithm" : {
+            "noOfSamples" : 0,
+            "seed" : 0
+          },
+          "continuousAlgorithm" : {
+            "type" : "SOBOL",
+            "noOfSamples" : 10,
+            "seed" : 0
+          }
+        }
+      },
+      "modifiers" : {
+        "initializeFrom" : "",
+        "variables" : [ ]
+      }
+    }
+  },
+  "metadata" : {
+    "created" : "2025-07-22 19:53:07.795093569",
+    "lastModified" : "2025-10-07T02:39:22.194011212Z",
+    "name" : "Experiment 1"
+  }
+}

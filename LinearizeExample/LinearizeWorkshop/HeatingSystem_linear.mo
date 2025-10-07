@@ -4,7 +4,7 @@ model HeatingSystem_linear
     extends LinearizeExample.LinearizeWorkshop.HeatingSystem_interface(final Qflow0=0.0, u0=0.0);
     parameter Integer ny = size(heatingSystemSS.C,1) "number of outputs";
     parameter Real[ny] y0 = {343.32267834748916, 296.48396463877145}  "Output at linearization point" annotation (Evaluate=false);
-    replaceable .ControlsBasics.Linearization.HeatingSystemSS heatingSystemSS 
+    replaceable LinearizeExample.LinearizeWorkshop.HeatingSystemSS heatingSystemSS 
        constrainedby Modelica.Blocks.Interfaces.MIMO annotation(Placement(transformation(extent = {{-40.0,0.0},{-20.0,20.0}},origin = {0.0,0.0},rotation = 0.0)));
     .Modelica.Blocks.Routing.Multiplex2 multiplex annotation(Placement(transformation(extent = {{-76.0,0.0},{-56.0,20.0}},origin = {0.0,0.0},rotation = 0.0)));
     .Modelica.Blocks.Routing.DeMultiplex2 deMultiplex annotation(Placement(transformation(extent = {{40,0},{60,20}},origin = {0,0},rotation = 0)));

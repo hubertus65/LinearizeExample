@@ -1,17 +1,18 @@
+within LinearizeExample.LinearizeWorkshop.ModelReduction;
 
-model StableHeatingSystem "Simple model of a heating system using Loop Closer component"
+partial model StableHeatingSystem "Simple model of a heating system using Loop Closer component"
    replaceable package Medium =
-      .Modelica.Media.CompressibleLiquids.LinearWater_pT_Ambient
+      .Modelica.Media.Water.ConstantPropertyLiquidWater
      constrainedby .Modelica.Media.Interfaces.PartialMedium;
   .Modelica.Fluid.Machines.ControlledPump pump(
     redeclare package Medium = Medium,
     N_nominal=1500,
     use_T_start=true,
     T_start=.Modelica.Units.Conversions.from_degC(40),
-    m_flow_start=0.5,
+    m_flow_start=0.01,
     m_flow_nominal=0.01,
     control_m_flow=false,
-    allowFlowReversal=false,
+    allowFlowReversal=true,
     p_a_start=110000,
     p_b_start=130000,
     p_a_nominal=110000,
@@ -26,9 +27,9 @@ model StableHeatingSystem "Simple model of a heating system using Loop Closer co
     dp_start=18000,
     dp_nominal=10000)
     annotation (Placement(transformation(extent={{60,-80},{40,-60}})));
-    .LinearizeExample.LInearizeWorkshop.ModelReduction.LinearizeLoopCloser referencePressure(redeclare replaceable package Medium = Medium,reference_p = 3.0e5) annotation(Placement(transformation(extent = {{-11.53,-11.53},{11.53,11.53}},origin = {-54.0,-18.0},rotation = 90.0)));
-    .Modelica.Blocks.Interfaces.RealInput Q_in annotation(Placement(transformation(extent = {{-120.0,50.0},{-80.0,90.0}},origin = {0.0,0.0},rotation = 0.0)));
-    .Modelica.Blocks.Interfaces.RealInput valve_in annotation(Placement(transformation(extent = {{-120.0,-90.0},{-80.0,-50.0}},origin = {0.0,0.0},rotation = 0.0)));
+    .LinearizeExample.LinearizeWorkshop.ModelReduction.LinearizeLoopCloser referencePressure(redeclare replaceable package Medium = Medium,reference_p = 1.2e5,
+    port_a.m_flow(start=0.01),
+    port_b.m_flow(start=-0.01)) annotation(Placement(transformation(extent = {{-11.53,-11.53},{11.53,11.53}},origin = {-54.0,-18.0},rotation = 90.0)));
 public
   .Modelica.Thermal.HeatTransfer.Sources.FixedTemperature T_ambient(T=system.T_ambient)
     annotation (Placement(transformation(extent={{-14,-27},{0,-13}})));
@@ -42,7 +43,7 @@ public
     alpha=-0.5)
     annotation (Placement(transformation(extent={{14.0,52.0},{34.0,72.0}},rotation = 0.0,origin = {0.0,0.0})));
   inner .Modelica.Fluid.System system(
-      m_flow_small=1e-4, energyDynamics=.Modelica.Fluid.Types.Dynamics.SteadyStateInitial,massDynamics = .Modelica.Fluid.Types.Dynamics.SteadyStateInitial)
+      m_flow_small=1e-4, energyDynamics=.Modelica.Fluid.Types.Dynamics.SteadyStateInitial,massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState)
                         annotation (Placement(transformation(extent={{-40.0,80.0},{-20.0,100.0}},rotation = 0.0,origin = {0.0,0.0})));
   .Modelica.Fluid.Pipes.DynamicPipe heater(
     redeclare package Medium = Medium,
@@ -126,8 +127,6 @@ equation
     connect(pump.port_b,heater.port_a) annotation(Line(points = {{-30,20},{30,20}},color = {0,127,255}));
     connect(referencePressure.port_b,pump.port_a) annotation(Line(points = {{-54,-6.47},{-54,20},{-50,20}},color = {0,127,255}));
     connect(radiator.port_b,referencePressure.port_a) annotation(Line(points = {{0,-70},{-54,-70},{-54,-29.53}},color = {0,127,255}));
-    connect(burner.Q_flow,Q_in) annotation(Line(points = {{14,62},{-43,62},{-43,70},{-100,70}},color = {0,0,127}));
-    connect(valve.opening,valve_in) annotation(Line(points = {{50,-62},{50,0},{-74,0},{-74,-70},{-100,-70}},color = {0,0,127}));
   annotation (Documentation(info="<html>
 <p>This is a copy of the original model from MSL:&nbsp;Modelica.Fluid.Examples.HeatingSystem, in order to show how to adapt models fro control design. Note that this model is not ideal from a control design point of view: all pressure states, the tank level and the tank temperature (almost thermally isolated from the rest) are irrelevant for the control problem. \"Good\" states for control design would be the two temperatures in the sensors, and the mass flow. The original model as-is works well for simulation.&nbsp;</p><p>Also: the model is declared partial, and cannot be simulated.&nbsp;</p><p><strong>Original documentation:</strong>&nbsp;</p><p>Simple heating system with a closed flow cycle.
 After 2000s of simulation time the valve fully opens. A simple idealized control is embedded
