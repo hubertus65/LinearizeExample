@@ -44,7 +44,7 @@ public
     annotation (Placement(transformation(extent={{14.0,52.0},{34.0,72.0}},rotation = 0.0,origin = {0.0,0.0})));
   inner .Modelica.Fluid.System system(
       m_flow_small=1e-4, energyDynamics=.Modelica.Fluid.Types.Dynamics.SteadyStateInitial,massDynamics = Modelica.Fluid.Types.Dynamics.SteadyState)
-                        annotation (Placement(transformation(extent={{-40.0,80.0},{-20.0,100.0}},rotation = 0.0,origin = {0.0,0.0})));
+                        annotation (Placement(transformation(extent={{-62.0,46.0},{-42.0,66.0}},rotation = 0.0,origin = {0.0,0.0})));
   .Modelica.Fluid.Pipes.DynamicPipe heater(
     redeclare package Medium = Medium,
     use_T_start=true,
